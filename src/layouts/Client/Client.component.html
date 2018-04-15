@@ -1,0 +1,25 @@
+<v-app class="client white">
+  <v-toolbar app color="white">
+    <v-avatar>
+      <img src="../../assets/shark2.png">
+    </v-avatar>
+    <v-toolbar-items>
+      <v-btn :to="{name: 'client-accountant'}" exact active-class="" flat>Accountant</v-btn>
+    </v-toolbar-items>
+
+    <v-spacer></v-spacer>
+
+    <!-- <v-toolbar-items v-if="!isAuth">
+      <v-btn :to="{name: 'auth-login'}" exact active-class="" flat>Sign In</v-btn>
+      <v-btn :to="{name: 'auth-register'}" exact active-class="" flat>Sign Up</v-btn>
+    </v-toolbar-items> -->
+  </v-toolbar>
+
+  <v-content class="blue-grey lighten-4">
+    <v-fade-transition mode="out-in">
+      <v-container fluid grid-list-md>
+        <router-view></router-view>
+      </v-container>
+    </v-fade-transition>
+  </v-content>
+</v-app>

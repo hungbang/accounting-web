@@ -1,0 +1,21 @@
+<section class="login-form">
+  <v-form v-model="valid" ref="form" lazy-validation>
+    <v-text-field type="email" name="email" required
+      v-model="email.data" prepend-icon="person" persistent-hint
+      :label="$t('login.email')"
+      :rules="email.rules"></v-text-field>
+
+    <v-text-field name="password" required
+      prepend-icon="lock"
+      v-model="password.data"
+      min="8"
+      :hint="$t('login.password_hint')"
+      :rules="password.rules"
+      :label="$t('login.password')"
+      :append-icon="passwordIcon"
+      :append-icon-cb="passwordIconCB"
+      :type="passwordType"></v-text-field>
+
+    <v-btn block color="primary" @click="login" :disabled="!valid">Login</v-btn>
+  </v-form>
+</section>

@@ -1,0 +1,49 @@
+<section class="register-form">
+  <v-fade-transition mode="out-in">
+    <v-form v-model="valid" ref="form" lazy-validation v-if="!isRegister">
+      <v-text-field type="text" name="firstname"
+        v-model="firstname.data"
+        :label="$t('register.firstname')"
+        :rules="firstname.rules"
+        maxlength="50"
+        required></v-text-field>
+
+      <v-text-field type="text" name="lastname"
+        v-model="lastname.data"
+        :label="$t('register.lastname')"
+        :rules="lastname.rules"
+        maxlength="50"
+        required></v-text-field>
+
+      <v-text-field type="text" name="email"
+        v-model="email.data"
+        :label="$t('register.email')"
+        :rules="email.rules"
+        maxlength="255"
+        required></v-text-field>
+
+      <v-text-field name="pass"
+        v-model="pass.data"
+        :label="$t('register.pass')"
+        :rules="pass.rules"
+        :append-icon="passIcon"
+        :append-icon-cb="passIconCB"
+        :type="passType"
+        required maxlength="50"minlength="8"></v-text-field>
+
+      <v-text-field name="pass_confirm"
+        v-model="pass_confirm.data"
+        :label="$t('register.pass_confirm')"
+        :rules="pass_confirm.rules"
+        :append-icon="passConfirmIcon"
+        :append-icon-cb="passConfirmIconCB"
+        :type="passConfirmType"
+        required maxlength="50" minlength="8"></v-text-field>
+
+      <v-btn block color="primary" @click="register" :disabled="!valid" v-html="$t('register.submit')"></v-btn>
+    </v-form>
+    <div class="text-xs-center" v-else>
+      <p class="body-1" v-html="$t('register.success_msg')"></p>
+    </div>
+  </v-fade-transition>
+</section>

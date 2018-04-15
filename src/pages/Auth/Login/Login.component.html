@@ -1,0 +1,15 @@
+<section class="login">
+  <v-card>
+    <v-toolbar dark color="light-blue darken-2">
+      <v-toolbar-title v-html="$t('login.title')"></v-toolbar-title>
+    </v-toolbar>
+
+    <v-card-text>
+      <auth-login-form />
+    </v-card-text>
+
+    <v-card-text>
+      <p class="text-xs-center">Create new account at <router-link :to="{name: 'auth-register'}">here!</router-link></p>
+    </v-card-text>
+  </v-card>
+</section>

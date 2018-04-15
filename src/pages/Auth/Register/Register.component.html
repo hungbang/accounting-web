@@ -1,0 +1,15 @@
+<section class="register">
+  <v-card>
+    <v-toolbar dark color="light-blue darken-2">
+      <v-btn icon :to="{ name: 'auth-login'}">
+        <v-icon>arrow_back</v-icon>
+      </v-btn>
+
+      <v-toolbar-title v-html="register_title"></v-toolbar-title>
+    </v-toolbar>
+
+    <v-card-text>
+      <auth-register-form />
+    </v-card-text>
+  </v-card>
+</section>

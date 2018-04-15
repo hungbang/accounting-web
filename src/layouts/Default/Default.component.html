@@ -1,0 +1,18 @@
+<section class="default">
+  <notification />
+  <v-fade-transition mode="out-in">
+    <router-view></router-view>
+  </v-fade-transition>
+  <vue-progress-bar></vue-progress-bar>
+
+  <!-- <v-card dark id="create">
+    <v-speed-dial v-model="fab" bottom right :direction="direction" :transition="transition">
+      <v-btn slot="activator" color="blue darken-2" fab hover v-model="fab" v-html="showLang"></v-btn>
+      <v-btn fab small color="light-blue darken-1"
+        v-for="(item, key) in languague"
+        :key="key"
+        @click="changeLanguague(item)"
+        v-html="item"></v-btn>
+    </v-speed-dial>
+  </v-card> -->
+</section>

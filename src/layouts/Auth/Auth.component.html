@@ -1,0 +1,21 @@
+<v-app class="auth">
+  <v-content>
+    <v-container fluid fill-height>
+      <v-layout align-center justify-center>
+        <v-flex xs12 sm8 md4>
+
+          <div class="text-xs-center">
+            <v-avatar :size="150" class="auth-logo mb-4 ">
+              <img src="../../assets/shark2.png">
+            </v-avatar>
+          </div>
+
+          <v-slide-x-reverse-transition mode="out-in">
+            <router-view></router-view>
+          </v-slide-x-reverse-transition>
+
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-content>
+</v-app>

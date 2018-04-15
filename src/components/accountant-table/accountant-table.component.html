@@ -1,0 +1,62 @@
+<section class="accountant">
+  <v-data-table :headers="headers" :items="statistics" hide-actions class="elevation-1 mb-3" expand>
+    <template slot="items" slot-scope="props">
+      <tr>
+        <td>
+          <v-btn icon class="mx-0 my-0" @click="addCoin()">
+            <v-icon color="teal">queue</v-icon>
+          </v-btn>
+          <v-btn icon class="mx-0 my-0" v-if="isRemove" @click="removeCoin(props.index)">
+            <v-icon color="red darken-1">highlight_off</v-icon>
+          </v-btn>
+        </td>
+        <td>
+          <v-select
+            :items="coins"
+            v-model="props.item.coin"
+            :label="$t('accountant.form.label_name')"
+            item-text="name"
+            autocomplete></v-select>
+        </td>
+        <td>
+          <v-text-field
+            type="number"
+            :label="$t('accountant.form.label_amount')"
+            v-model="props.item.coin.amount"
+            @input="coinTotalCurrent(props.item.coin)"></v-text-field>
+        </td>
+        <td>
+          <v-text-field
+            type="number"
+            v-model="props.item.coin.price_buy"
+            @input="coinTotalBuy(props.item.coin)"></v-text-field>
+        </td>
+        <td>
+          {{ props.item.coin.total_buy ? props.item.coin.total_buy : '-' }}
+        </td>
+        <td>
+          {{ props.item.coin.price_usd ? props.item.coin.price_usd : '-' }}
+        </td>
+        <td>
+          <span
+            v-bind:class="{'red--text': islose(props.item.coin), 'blue--text': !islose(props.item.coin) }">
+           {{ props.item.coin.total_current ? props.item.coin.total_current : '-' }}
+          </span>
+        </td>
+      </tr>
+    </template>
+
+    <template slot="footer">
+      <td colspan="5"></td>
+      <td>
+        <strong>Total</strong>
+      </td>
+      <td>
+        <p class="my-0">{{ sumTotal }}</p>
+        <p class="my-0">B0.0000</p>
+      </td>
+    </template>
+  </v-data-table>
+
+  <dialog-details :isOpen="isDialog" :coin="dialogData" @closeModal="closeDetails"/>
+</section>

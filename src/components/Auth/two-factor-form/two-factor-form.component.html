@@ -1,0 +1,13 @@
+<section class="two-factor-form">
+  <p class="subheading mb-0 text-xs-center" v-html="$t('factor_auth.subheader')"></p>
+  <p class="subheading text-xs-center" v-html="$t('factor_auth.subheader_one')"></p>
+    <v-form v-model="valid" ref="form" lazy-validation>
+      <v-text-field type="text" name="factorAuth" required
+        v-model="factorAuth.data"
+        prepend-icon="lock_open"
+        maxlength="6"
+        :rules="factorAuth.rules"></v-text-field>
+
+      <v-btn block color="primary" :disabled="!valid" v-html="$t('factor_auth.submit')"></v-btn>
+    </v-form>
+</section>

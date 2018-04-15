@@ -1,0 +1,16 @@
+#create {
+  .speed-dial {
+    position: absolute;
+  }
+  .btn--floating {
+    position: relative;
+  }
+}
+
+.btn .btn__content .icon {
+  display: inherit;
+}
+
+.datatable thead th.column:focus {
+  outline: none;
+}
