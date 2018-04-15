@@ -49,6 +49,7 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
+    port: 8081,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
 
