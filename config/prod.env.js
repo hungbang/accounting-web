@@ -1,6 +1,6 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  API_URL: '""',
-  API_VERSION: '"/v1.0"'
+  API_URL: '"http://codeshark.io/rest/api/"',
+  API_VERSION: '""'
 }
