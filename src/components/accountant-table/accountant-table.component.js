@@ -29,7 +29,7 @@ export default {
         {
           text: this.$t('accountant.table.title_amount'),
           value: 'amount',
-          width: '150px',
+          width: '200px',
           sortable: false
         },
         {
@@ -41,11 +41,6 @@ export default {
           sortable: false
         },
         {
-          text: this.$t('accountant.table.title_total', { type: 'Buy' }),
-          value: 'total',
-          sortable: false
-        },
-        {
           text: this.$t('accountant.table.title_price', {
             type: 'Current'
           }),
@@ -54,13 +49,24 @@ export default {
           sortable: false
         },
         {
+          text: this.$t('accountant.table.title_total', { type: 'Buy' }),
+          value: 'total',
+          sortable: false
+        },
+        {
           text: this.$t('accountant.table.title_total', { type: 'Current' }),
           value: 'total',
+          sortable: false
+        },
+        {
+          text: this.$t('accountant.table.title_profit_loss'),
+          value: 'profit_loss',
           sortable: false
         }
       ],
       isDialog: false,
-      dialogData: {}
+      dialogData: {},
+      textProfitLoss: 'trending_flat'
     }
   },
   created () {
@@ -80,7 +86,7 @@ export default {
       'addCoin',
       'removeCoin',
       'coinTotalCurrent',
-      'coinTotalBuy'
+      'coinTotalBuy',
     ]),
     setFocus(data) {
       if (data.name && data.amount) {

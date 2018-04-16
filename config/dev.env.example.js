@@ -4,6 +4,6 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  API_URL: '"http://codeshark.io/rest/"',
+  API_URL: '"http://codeshark.io/api/"',
   API_VERSION: '""'
 })

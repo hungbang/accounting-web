@@ -21,7 +21,6 @@
         <td>
           <v-text-field
             type="number"
-            :label="$t('accountant.form.label_amount')"
             v-model="props.item.coin.amount"
             @input="coinTotalCurrent(props.item.coin)"></v-text-field>
         </td>
@@ -32,28 +31,32 @@
             @input="coinTotalBuy(props.item.coin)"></v-text-field>
         </td>
         <td>
-          {{ props.item.coin.total_buy ? props.item.coin.total_buy : '-' }}
-        </td>
-        <td>
           {{ props.item.coin.price_usd ? props.item.coin.price_usd : '-' }}
         </td>
         <td>
-          <span
-            v-bind:class="{'red--text': islose(props.item.coin), 'blue--text': !islose(props.item.coin) }">
+          {{ props.item.coin.total_buy ? props.item.coin.total_buy : '-' }}
+        </td>
+        <td>
+          <span :class="{'red--text': islose(props.item.coin), 'blue--text': !islose(props.item.coin) }">
            {{ props.item.coin.total_current ? props.item.coin.total_current : '-' }}
           </span>
+        </td>
+        <td>
+          <span :class="{'red--text': !props.item.coin.isProfitLoss, 'blue--text': props.item.coin.isProfitLoss }">
+            {{ props.item.coin.profit_loss }}
+          </span>
+          <v-icon small v-html="props.item.coin.textProfitLoss"></v-icon>
         </td>
       </tr>
     </template>
 
     <template slot="footer">
       <td colspan="5"></td>
-      <td>
+      <td colspan="1">
         <strong>Total</strong>
       </td>
-      <td>
+      <td colspan="2">
         <p class="my-0">{{ sumTotal }}</p>
-        <p class="my-0">B0.0000</p>
       </td>
     </template>
   </v-data-table>
