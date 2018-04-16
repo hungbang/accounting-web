@@ -45,9 +45,10 @@ export default {
   accountant: {
     table: {
       title_name: 'Coin name (symbol)',
-      title_amount: 'Amount',
+      title_amount: 'Amount (Coin)',
       title_price: 'Price {type} (USD)',
-      title_total: 'Total {type} (USD)'
+      title_total: 'Total {type} (USD)',
+      title_profit_loss: 'Profit & loss'
     },
     form: {
       label_name: 'Name (Symbol)',

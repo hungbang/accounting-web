@@ -1,4 +1,4 @@
-import { ADD_COIN, REMOVE_COIN, RECEVER_COINS, COIN_TOTAL_BUY, COIN_TOTAL_CURRENT, SUM_TOTAL, API_FAILURE } from '@/store/mutations'
+import { ADD_COIN, REMOVE_COIN, RECEVER_COINS, COIN_TOTAL_BUY, COIN_TOTAL_CURRENT, SUM_TOTAL, PROFIT_LOSS, API_FAILURE } from '@/store/mutations'
 import coinService from '@/api/coin'
 
 const state = {
@@ -23,12 +23,14 @@ const actions = {
       .then(res => commit(RECEVER_COINS, res))
       .catch(errors => commit(API_FAILURE, errors))
   },
-  coinTotalCurrent ({commit}, idx) {
-    commit(COIN_TOTAL_CURRENT, idx)
+  coinTotalCurrent ({commit}, coin) {
+    commit(COIN_TOTAL_CURRENT, coin)
     commit(SUM_TOTAL)
+    commit(PROFIT_LOSS, coin)
   },
-  coinTotalBuy ({commit}, idx) {
-    commit(COIN_TOTAL_BUY, idx)
+  coinTotalBuy ({commit}, coin) {
+    commit(COIN_TOTAL_BUY, coin)
+    commit(PROFIT_LOSS, coin)
   },
   addCoin ({commit}) {
     commit(ADD_COIN)
@@ -57,6 +59,9 @@ const mutations = {
         item.amount = null
         item.total_current = null
         item.total_buy = null
+        item.textProfitLoss = null
+        item.profitLoss = null
+        item.price_buy = null
       }
     })
 
@@ -78,6 +83,23 @@ const mutations = {
     })
 
     state.total = _total
+  },
+  [PROFIT_LOSS] (state, coin) {
+    if (coin.total_current && coin.total_buy) {
+      coin.profit_loss = coin.total_current - coin.total_buy
+
+      if (coin.profit_loss > 0) {
+        coin.isProfitLoss = true
+        coin.textProfitLoss = 'trending_up'
+      } else {
+        coin.isProfitLoss = false
+        coin.textProfitLoss = 'trending_down'
+      }
+    } else {
+      coin.isProfitLoss = null
+      coin.profit_loss = '-'
+      coin.textProfitLoss = 'trending_flat'
+    }
   }
 }
 
