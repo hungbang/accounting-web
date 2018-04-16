@@ -62,4 +62,8 @@
   </v-data-table>
 
   <dialog-details :isOpen="isDialog" :coin="dialogData" @closeModal="closeDetails"/>
+
+  <v-btn absolute dark small fab top right color="teal" title="Screen Share" @click="copyToken">
+    <v-icon class="d-inline-flex">share</v-icon>
+  </v-btn>
 </section>

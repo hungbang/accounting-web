@@ -5,9 +5,11 @@ import Default from '@/layouts/Default'
 import router from '@/router'
 import Vuetify from 'vuetify'
 import VueProgressBar from 'vue-progressbar'
+import VueClipboard from 'vue-clipboard2'
 import i18n from './translated'
 import store from './store'
 
+import 'jquery-base64'
 import 'babel-polyfill'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons/iconfont/material-icons.css'
@@ -27,6 +29,7 @@ const progressBarOpts = {
 }
 
 Vue.use(Vuetify, {})
+Vue.use(VueClipboard)
 Vue.use(VueProgressBar, progressBarOpts)
 
 Vue.config.productionTip = false

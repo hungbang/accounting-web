@@ -1,0 +1,44 @@
+<section class="accountant-view">
+  <v-data-table :headers="headers" :items="statisticsView" hide-actions class="elevation-1 mb-3" expand>
+    <template slot="items" slot-scope="props">
+      <tr>
+        <td>
+          {{ props.item.coin.name }}
+        </td>
+        <td>
+          {{ props.item.coin.amount }}
+        </td>
+        <td>
+          {{ props.item.coin.price_buy }}
+        </td>
+        <td>
+          {{ props.item.coin.price_usd }}
+        </td>
+        <td>
+          {{ props.item.coin.total_buy }}
+        </td>
+        <td>
+          <span :class="{'red--text': islose(props.item.coin), 'blue--text': !islose(props.item.coin) }">
+            {{ props.item.coin.total_current }}
+          </span>
+        </td>
+        <td>
+          <span :class="{'red--text': !props.item.coin.isProfitLoss, 'blue--text': props.item.coin.isProfitLoss }">
+            {{ props.item.coin.profit_loss }}
+          </span>
+          <v-icon small v-html="props.item.coin.textProfitLoss"></v-icon>
+        </td>
+      </tr>
+    </template>
+
+    <template slot="footer">
+      <td colspan="4"></td>
+      <td colspan="1">
+        <strong>Total</strong>
+      </td>
+      <td colspan="2">
+        <p class="my-0">{{ totalView }}</p>
+      </td>
+    </template>
+  </v-data-table>
+</section>
