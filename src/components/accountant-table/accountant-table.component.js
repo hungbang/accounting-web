@@ -3,6 +3,7 @@ import {
   mapGetters
 } from 'vuex'
 
+import env from '@/environment'
 import DialogDetails from '@/components/accountant-table/dialog-details'
 
 export default {
@@ -65,8 +66,7 @@ export default {
         }
       ],
       isDialog: false,
-      dialogData: {},
-      textProfitLoss: 'trending_flat'
+      dialogData: {}
     }
   },
   created () {
@@ -74,7 +74,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'coins', 'statistics', 'sumTotal'
+      'coins', 'statistics', 'sumTotal', 'coinToken'
     ]),
     isRemove() {
       return this.statistics.length > 1
@@ -87,12 +87,9 @@ export default {
       'removeCoin',
       'coinTotalCurrent',
       'coinTotalBuy',
+      'screenShare',
+      'notify'
     ]),
-    setFocus(data) {
-      if (data.name && data.amount) {
-        this.getCoinDetails(data)
-      }
-    },
     showDetails(data) {
       this.isDialog = true;
     },
@@ -101,6 +98,24 @@ export default {
     },
     islose (coin) {
       return coin.total_current < coin.total_buy
+    },
+    copyToken () {
+      if (this.statistics && this.statistics[0].coin.id) {
+        this.screenShare()
+
+        this.$copyText(`${env.DOMAIN}view?token=${this.coinToken}`)
+          .then(res => {
+            this.notify({
+              mode: 'success',
+              message: 'Copy to clipboard successfully'
+            })
+          }, error => {
+            this.notify({
+              mode: 'error',
+              message: 'Failed to copy url'
+            })
+          })
+      }
     }
   }
 }

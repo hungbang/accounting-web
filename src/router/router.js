@@ -1,6 +1,7 @@
 import AuthRouter from '@/pages/Auth/auth.router'
 import LayoutsClient from '@/layouts/Client'
 import Accountant from '@/pages/Accountant'
+import ScreenShare from '@/pages/ScreenShare'
 
 const AppRouter = [
   {
@@ -12,6 +13,11 @@ const AppRouter = [
         path: '',
         name: 'client-accountant',
         component: Accountant
+      },
+      {
+        path: 'view',
+        name: 'client-accountant-view',
+        component: ScreenShare
       }
     ]
   },

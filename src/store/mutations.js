@@ -16,3 +16,6 @@ export const COIN_TOTAL_BUY     = 'COIN_TOTAL_BUY'
 export const COIN_TOTAL_CURRENT = 'COIN_TOTAL_CURRENT'
 export const SUM_TOTAL          = 'SUM_TOTAL'
 export const PROFIT_LOSS        = 'PROFIT_LOSS'
+
+export const SCREEN_SHARE = 'SCREEN_SHARE'
+export const STATISTICS_VIEW = 'STATISTICS_VIEW'

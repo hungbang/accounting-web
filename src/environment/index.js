@@ -1,4 +1,5 @@
 export default {
+  DOMAIN: process.env.DOMAIN,
   API: {
     PATH: process.env.API_URL + process.env.API_VERSION,
     EMULATE_JSON: false,

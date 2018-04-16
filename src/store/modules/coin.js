@@ -1,5 +1,10 @@
-import { ADD_COIN, REMOVE_COIN, RECEVER_COINS, COIN_TOTAL_BUY, COIN_TOTAL_CURRENT, SUM_TOTAL, PROFIT_LOSS, API_FAILURE } from '@/store/mutations'
+import {
+  ADD_COIN, REMOVE_COIN, RECEVER_COINS, COIN_TOTAL_BUY, COIN_TOTAL_CURRENT,
+  SUM_TOTAL, PROFIT_LOSS, SCREEN_SHARE, STATISTICS_VIEW, API_FAILURE
+} from '@/store/mutations'
+
 import coinService from '@/api/coin'
+import * as clone from 'lodash/clone'
 
 const state = {
   coins: [],
@@ -8,13 +13,19 @@ const state = {
       coin: {}
     }
   ],
-  total: 0
+  total: 0,
+  statisticsView: [],
+  totalView: 0,
+  coinToken: ''
 }
 
 const getters = {
   coins: state => state.coins,
   statistics: state => state.statistics,
-  sumTotal: state => state.total
+  statisticsView: state => state.statisticsView,
+  sumTotal: state => state.total,
+  totalView: state => state.totalView,
+  coinToken: state => state.coinToken
 }
 
 const actions = {
@@ -38,6 +49,12 @@ const actions = {
   removeCoin ({ commit }, idx) {
     commit(REMOVE_COIN, idx)
     commit(SUM_TOTAL)
+  },
+  screenShare ({ commit }) {
+    commit(SCREEN_SHARE)
+  },
+  coinView ({ commit }, token) {
+    commit(STATISTICS_VIEW, token)
   }
 }
 
@@ -100,6 +117,28 @@ const mutations = {
       coin.profit_loss = '-'
       coin.textProfitLoss = 'trending_flat'
     }
+  },
+  [SCREEN_SHARE] (state, coin) {
+    let _token
+    let _statistics = clone(state.statistics)
+
+    _statistics = _statistics.filter(item => item.coin.id)
+
+    if (_statistics.length) {
+      _token = $.base64.encode(JSON.stringify(_statistics))
+      state.coinToken = _token
+    }
+  },
+  [STATISTICS_VIEW] (state, token) {
+    let _total = 0
+    state.statisticsView = JSON.parse($.base64.decode(token))
+    state.statisticsView.forEach(item => {
+      if (item.coin.total_current) {
+        _total += item.coin.total_current
+      }
+    })
+
+    state.totalView = _total
   }
 }
 
