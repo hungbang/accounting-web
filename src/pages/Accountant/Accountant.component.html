@@ -1,4 +1,11 @@
-<v-card class="accountant">
-  <accountant-table />
-</v-card>
+<section class="accountant">
+  <v-card class="hidden-sm-and-down">
+    <accountant-table />
+  </v-card>
 
+  <accountant-smartphone class="hidden-md-and-up"/>
+
+  <v-btn fixed dark small fab bottom right class="btn-share" color="teal" title="Screen Share" @click="copyToken">
+    <v-icon class="d-inline-flex">share</v-icon>
+  </v-btn>
+</section>

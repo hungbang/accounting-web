@@ -74,7 +74,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'coins', 'statistics', 'sumTotal', 'coinToken'
+      'coins', 'statistics', 'sumTotal'
     ]),
     isRemove() {
       return this.statistics.length > 1
@@ -86,9 +86,7 @@ export default {
       'addCoin',
       'removeCoin',
       'coinTotalCurrent',
-      'coinTotalBuy',
-      'screenShare',
-      'notify'
+      'coinTotalBuy'
     ]),
     showDetails(data) {
       this.isDialog = true;
@@ -98,24 +96,6 @@ export default {
     },
     islose (coin) {
       return coin.total_current < coin.total_buy
-    },
-    copyToken () {
-      if (this.statistics && this.statistics[0].coin.id) {
-        this.screenShare()
-
-        this.$copyText(`${env.DOMAIN}view?token=${this.coinToken}`)
-          .then(res => {
-            this.notify({
-              mode: 'success',
-              message: 'Copy to clipboard successfully'
-            })
-          }, error => {
-            this.notify({
-              mode: 'error',
-              message: 'Failed to copy url'
-            })
-          })
-      }
     }
   }
 }

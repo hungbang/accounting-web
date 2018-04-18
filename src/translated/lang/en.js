@@ -46,8 +46,8 @@ export default {
     table: {
       title_name: 'Coin name (symbol)',
       title_amount: 'Amount (Coin)',
-      title_price: 'Price {type} (USD)',
-      title_total: 'Total {type} (USD)',
+      title_price: '{type} Price (USD)',
+      title_total: '{type} Total (USD)',
       title_profit_loss: 'Profit & loss'
     },
     form: {
