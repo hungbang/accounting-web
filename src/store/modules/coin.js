@@ -1,6 +1,5 @@
 import {
-  ADD_COIN, REMOVE_COIN, RECEVER_COINS, COIN_TOTAL_BUY, COIN_TOTAL_CURRENT,
-  SUM_TOTAL, PROFIT_LOSS, SCREEN_SHARE, STATISTICS_VIEW, API_FAILURE
+  RECEVER_COINS, RECEVER_SAVE_COIN, ADD_COIN, REMOVE_COIN, SAVE_COIN, SCREEN_SHARE, STATISTICS_VIEW, API_FAILURE
 } from '@/store/mutations'
 
 import coinService from '@/api/coin'
@@ -13,7 +12,8 @@ const state = {
       coin: {}
     }
   ],
-  total: 0,
+  isSaveModal: false,
+  statistics_tmp: JSON.parse(localStorage.getItem('accountant-coin')),
   statisticsView: [],
   totalView: 0,
   coinToken: ''
@@ -22,39 +22,56 @@ const state = {
 const getters = {
   coins: state => state.coins,
   statistics: state => state.statistics,
+  isSaveModal: state => state.isSaveModal,
   statisticsView: state => state.statisticsView,
-  sumTotal: state => state.total,
   totalView: state => state.totalView,
   coinToken: state => state.coinToken
 }
 
 const actions = {
-  getCoins ({ commit }) {
+  getCoins ({ commit, dispatch }) {
     coinService.coins()
       .then(res => commit(RECEVER_COINS, res))
+      .then(() => {
+        if (state.statistics_tmp && state.statistics_tmp.length) {
+          commit(RECEVER_SAVE_COIN)
+        }
+      })
       .catch(errors => commit(API_FAILURE, errors))
-  },
-  coinTotalCurrent ({commit}, coin) {
-    commit(COIN_TOTAL_CURRENT, coin)
-    commit(SUM_TOTAL)
-    commit(PROFIT_LOSS, coin)
-  },
-  coinTotalBuy ({commit}, coin) {
-    commit(COIN_TOTAL_BUY, coin)
-    commit(PROFIT_LOSS, coin)
   },
   addCoin ({commit}) {
     commit(ADD_COIN)
   },
   removeCoin ({ commit }, idx) {
     commit(REMOVE_COIN, idx)
-    commit(SUM_TOTAL)
   },
-  screenShare ({ commit }) {
-    commit(SCREEN_SHARE)
+  screenShare ({ commit }, coins) {
+    commit(SCREEN_SHARE, coins)
   },
   coinView ({ commit }, token) {
     commit(STATISTICS_VIEW, token)
+  },
+  saveCoin ({ state, commit, dispatch }) {
+    if (state.statistics && state.statistics[0].coin.id) {
+      commit(SAVE_COIN)
+      dispatch('notify', {
+        mode: 'success',
+        message: 'Data was saved successfully!'
+      })
+    } else {
+      dispatch('notify', {
+        mode: 'info',
+        message: 'Please choose one coin'
+      })
+    }
+
+    state.isSaveModal = false
+  },
+  openSaveModal ({ state }) {
+    state.isSaveModal = true
+  },
+  closeSaveModal ({ state }) {
+    state.isSaveModal = false
   }
 }
 
@@ -66,6 +83,15 @@ const mutations = {
     })
 
     state.coins = coins
+  },
+  [RECEVER_SAVE_COIN] (state) {
+    state.statistics = []
+    state.statistics_tmp.filter((item, key) => {
+      state.statistics.push({coin: state.coins.find(coin => coin.id === item.id)})
+
+      state.statistics[key].coin.amount = item.amount
+      state.statistics[key].coin.price_buy = item.price_buy
+    })
   },
   [ADD_COIN] (state) {
     state.statistics.push({ coin: {} })
@@ -84,43 +110,25 @@ const mutations = {
 
     state.statistics.splice(idx, 1)
   },
-  [COIN_TOTAL_CURRENT] (state, coin) {
-    coin.total_current = coin.amount * coin.price_usd
-  },
-  [COIN_TOTAL_BUY] (state, coin) {
-    coin.total_buy = coin.amount * coin.price_buy
-  },
-  [SUM_TOTAL] (state) {
-    let _total = 0
+  [SAVE_COIN] (state) {
+    let _saveArr = []
+    let _saveTmp = clone(state.statistics)
 
-    state.statistics.forEach(item => {
-      if (item.coin.total_current) {
-        _total += item.coin.total_current
+    _saveTmp.filter(item => {
+      if (item.coin.id) {
+        _saveArr.push({
+          id: item.coin.id,
+          amount: item.coin.amount,
+          price_buy: item.coin.price_buy
+        })
       }
     })
 
-    state.total = _total
+    localStorage.setItem('accountant-coin', JSON.stringify(_saveArr))
   },
-  [PROFIT_LOSS] (state, coin) {
-    if (coin.total_current && coin.total_buy) {
-      coin.profit_loss = coin.total_current - coin.total_buy
-
-      if (coin.profit_loss > 0) {
-        coin.isProfitLoss = true
-        coin.textProfitLoss = 'trending_up'
-      } else {
-        coin.isProfitLoss = false
-        coin.textProfitLoss = 'trending_down'
-      }
-    } else {
-      coin.isProfitLoss = null
-      coin.profit_loss = '-'
-      coin.textProfitLoss = 'trending_flat'
-    }
-  },
-  [SCREEN_SHARE] (state, coin) {
+  [SCREEN_SHARE] (state, coins) {
     let _token
-    let _statistics = clone(state.statistics)
+    let _statistics = clone(coins)
 
     _statistics = _statistics.filter(item => item.coin.id)
 
@@ -134,6 +142,14 @@ const mutations = {
     state.statisticsView = JSON.parse($.base64.decode(token))
     state.statisticsView.forEach(item => {
       if (item.coin.total_current) {
+        item.coin.profit_loss = item.coin.total_current - item.coin.total_buy
+
+        if (item.coin.profit_loss > 0) {
+          item.coin.isProfitLoss = true
+        } else {
+          item.coin.isProfitLoss = false
+        }
+
         _total += item.coin.total_current
       }
     })

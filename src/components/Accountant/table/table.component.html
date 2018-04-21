@@ -21,29 +21,27 @@
         <td>
           <v-text-field
             type="number"
-            v-model="props.item.coin.amount"
-            @input="coinTotalCurrent(props.item.coin)"></v-text-field>
+            v-model="props.item.coin.amount"></v-text-field>
         </td>
         <td>
           <v-text-field
             type="number"
-            v-model="props.item.coin.price_buy"
-            @input="coinTotalBuy(props.item.coin)"></v-text-field>
+            v-model="props.item.coin.price_buy"></v-text-field>
         </td>
         <td>
           {{ props.item.coin.price_usd ? props.item.coin.price_usd : '-' }}
         </td>
         <td>
-          {{ props.item.coin.total_buy ? props.item.coin.total_buy : '-' }}
+            {{ total(props.item.coin, 'buy') }}
         </td>
         <td>
           <span :class="{'red--text': islose(props.item.coin), 'blue--text': !islose(props.item.coin) }">
-           {{ props.item.coin.total_current ? props.item.coin.total_current : '-' }}
+           {{ total(props.item.coin, 'current') }}
           </span>
         </td>
         <td>
-          <span :class="{'red--text': !props.item.coin.isProfitLoss, 'blue--text': props.item.coin.isProfitLoss }">
-            {{ props.item.coin.profit_loss }}
+          <span :class="{'red--text': islose(props.item.coin), 'blue--text': !islose(props.item.coin) }">
+            {{ profitLoss(props.item.coin) }}
           </span>
           <v-icon small v-html="props.item.coin.textProfitLoss"></v-icon>
         </td>
@@ -60,6 +58,4 @@
       </td>
     </template>
   </v-data-table>
-
-  <dialog-details :isOpen="isDialog" :coin="dialogData" @closeModal="closeDetails"/>
 </section>
