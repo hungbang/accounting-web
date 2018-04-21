@@ -1,4 +1,4 @@
-import AccountantView from '@/components/accountant-view'
+import AccountantView from '@/components/Accountant/view'
 
 export default {
   name: 'ScreenShare',

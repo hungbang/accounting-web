@@ -5,14 +5,16 @@ import {
 
 import env from '@/environment'
 
-import AccountantTable from '@/components/accountant-table'
-import AccountantSmartphone from '@/components/accountant-smartphone'
+import AccountantTable from '@/components/Accountant/table'
+import AccountantSmartphone from '@/components/Accountant/smartphone'
+import AccountantSaveModal from '@/components/Accountant/modal-save'
 
 export default {
   name: 'Accountant',
   components: {
     AccountantTable,
-    AccountantSmartphone
+    AccountantSmartphone,
+    AccountantSaveModal
   },
   props: [],
   data () {
@@ -35,7 +37,7 @@ export default {
     ]),
     copyToken () {
       if (this.statistics && this.statistics[0].coin.id) {
-        this.screenShare()
+        this.screenShare(this.statistics)
 
         this.$copyText(`${env.DOMAIN}view?token=${this.coinToken}`)
           .then(res => {
