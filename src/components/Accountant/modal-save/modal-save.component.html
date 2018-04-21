@@ -1,0 +1,20 @@
+<section class="modal-save">
+  <v-dialog v-model="isSaveModal" persistent max-width="300">
+    <v-card>
+      <v-card-title class="title">Would you want save ?</v-card-title>
+      <v-card-text class="text-xs-center">
+        <v-btn color="primary" @click="saveCoin">
+          Online
+        </v-btn>
+
+        <v-btn color="primary" disabled>
+          Offline
+        </v-btn>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="green darken-1" flat @click.stop="closeSaveModal">Close</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</section>

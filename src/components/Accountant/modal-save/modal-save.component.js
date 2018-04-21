@@ -1,25 +1,23 @@
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'Client',
+  name: 'ModalSave',
   components: {},
   props: [],
   data () {
     return {
-      drawer: null,
-      mini: false
+
     }
   },
   computed: {
     ...mapGetters([
-      'isAuth'
+      'isSaveModal'
     ])
   },
   methods: {
     ...mapActions([
-      'signOut',
-      'coinRefresh',
-      'openSaveModal'
+      'closeSaveModal',
+      'saveCoin'
     ])
   }
 }
