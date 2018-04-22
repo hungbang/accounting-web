@@ -4,6 +4,7 @@ import Vue from 'vue'
 import Default from '@/layouts/Default'
 import router from '@/router'
 import Vuetify from 'vuetify'
+import VueGtm from 'vue-gtm'
 import VueProgressBar from 'vue-progressbar'
 import VueClipboard from 'vue-clipboard2'
 import i18n from './translated'
@@ -31,6 +32,10 @@ const progressBarOpts = {
 Vue.use(Vuetify, {})
 Vue.use(VueClipboard)
 Vue.use(VueProgressBar, progressBarOpts)
+Vue.use(VueGtm, {
+  debug: process.env.GTM_DEBUG,
+  vueRouter: router
+})
 
 Vue.config.productionTip = false
 
