@@ -11,32 +11,23 @@
           </v-btn>
         </td>
         <td>
-          <v-select
-            :items="coins"
-            v-model="props.item.coin"
-            :label="$t('accountant.form.label_name')"
-            item-text="name"
-            autocomplete></v-select>
+          <v-select :items="coins" v-model="props.item.coin" :label="$t('accountant.form.label_name')" item-text="name" autocomplete></v-select>
         </td>
         <td>
-          <v-text-field
-            type="number"
-            v-model="props.item.coin.amount"></v-text-field>
+          <v-text-field type="number" v-model="props.item.coin.amount"></v-text-field>
         </td>
         <td>
-          <v-text-field
-            type="number"
-            v-model="props.item.coin.price_buy"></v-text-field>
+          <v-text-field type="number" v-model="props.item.coin.price_buy"></v-text-field>
         </td>
         <td>
           {{ props.item.coin.price_usd ? props.item.coin.price_usd : '-' }}
         </td>
         <td>
-            {{ total(props.item.coin, 'buy') }}
+          {{ total(props.item.coin, 'buy') }}
         </td>
         <td>
           <span :class="{'red--text': islose(props.item.coin), 'blue--text': !islose(props.item.coin) }">
-           {{ total(props.item.coin, 'current') }}
+            {{ total(props.item.coin, 'current') }}
           </span>
         </td>
         <td>

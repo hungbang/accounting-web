@@ -9,8 +9,8 @@
       </v-btn>
       {{ item.coin.name }}
       <p class="my-0 mr-5 d-inline-block">
-        <span :class="{'red--text': !item.coin.isProfitLoss, 'blue--text': item.coin.isProfitLoss }">
-          {{ item.coin.profit_loss }}
+        <span :class="{'red--text': islose(item.coin), 'blue--text': !islose(item.coin) }">
+          {{ profitLoss(item.coin) }}
         </span>
         <v-icon small v-html="item.coin.textProfitLoss"></v-icon>
       </p>
@@ -19,9 +19,9 @@
       <v-card-text>
         <v-select :items="coins" v-model="item.coin" :label="$t('accountant.table.title_name')" item-text="name" autocomplete></v-select>
 
-        <v-text-field type="number" :label="$t('accountant.table.title_amount')" v-model="item.coin.amount" @input="coinTotalCurrent(item.coin)"></v-text-field>
+        <v-text-field type="number" :label="$t('accountant.table.title_amount')" v-model="item.coin.amount"></v-text-field>
 
-        <v-text-field type="number" :label="$t('accountant.table.title_price', {type: 'buy'})" v-model="item.coin.price_buy" @input="coinTotalBuy(item.coin)"></v-text-field>
+        <v-text-field type="number" :label="$t('accountant.table.title_price', {type: 'buy'})" v-model="item.coin.price_buy"></v-text-field>
       </v-card-text>
       <v-list dense>
         <v-list-tile>
@@ -47,8 +47,8 @@
           <v-list-tile-content v-html="$t('accountant.table.title_profit_loss')"></v-list-tile-content>
           <v-list-tile-content class="align-end">
             <p class="my-0">
-              <span :class="{'red--text': !item.coin.isProfitLoss, 'blue--text': item.coin.isProfitLoss }">
-                {{ item.coin.profit_loss }}
+              <span :class="{'red--text': islose(item.coin), 'blue--text': !islose(item.coin) }">
+                {{ profitLoss(item.coin) }}
               </span>
               <v-icon small v-html="item.coin.textProfitLoss"></v-icon>
             </p>
