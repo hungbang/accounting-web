@@ -13,7 +13,7 @@ export const api = axios.create({
 // Default interceptor private
 export const _api = axios.create({
   baseURL: ENV.API.PATH,
-  timeout: 5000 // all requests will wait 2.5 seconds before timing out
+  timeout: 50000 // all requests will wait 2.5 seconds before timing out
 })
 
 // Add a request interceptor

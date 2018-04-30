@@ -21,11 +21,9 @@
     "sass-loader": "^6.0.7",
     "vue": "^2.5.2",
     "vue-clipboard2": "^0.1.0",
-    "vue-gtm": "^1.0.2",
     "vue-i18n": "^7.6.0",
     "vue-progressbar": "^0.7.4",
     "vue-router": "^3.0.1",
-    "vue-ua": "^1.5.0",
     "vuetify": "^1.0.14",
     "vuex": "^3.0.1"
   },

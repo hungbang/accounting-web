@@ -4,8 +4,6 @@ import Vue from 'vue'
 import Default from '@/layouts/Default'
 import router from '@/router'
 import Vuetify from 'vuetify'
-import VueGtm from 'vue-gtm'
-import VueAnalytics from 'vue-ua'
 import VueProgressBar from 'vue-progressbar'
 import VueClipboard from 'vue-clipboard2'
 import i18n from './translated'
@@ -33,26 +31,6 @@ const progressBarOpts = {
 Vue.use(Vuetify, {})
 Vue.use(VueClipboard)
 Vue.use(VueProgressBar, progressBarOpts)
-Vue.use(VueGtm, {
-  debug: process.env.GTM_DEBUG,
-  vueRouter: router
-})
-Vue.use(VueAnalytics, {
-  appName: 'Codeshark.io', // Mandatory
-  appVersion: 'Version 1', // Mandatory
-  trackingId: 'UA-117907524-1', // Mandatory
-  debug: process.env.GTM_DEBUG, // Whether or not display console logs debugs (optional)
-  vueRouter: router, // Pass the router instance to automatically sync with router (optional)
-  // ignoredViews: ['homepage'], // If router, you can exclude some routes name (case insensitive) (optional)
-  trackPage: true, // Whether you want page changes to be recorded as pageviews (website) or screenviews (app), default: false
-  globalMetrics: [ // Optional
-    {metric: 1, value: 'ga:users'}
-  ],
-  globalDimensions: [ // Optional
-    {dimension: 1, value: 'ga:userType'},
-    {dimension: 2, value: 'ga:date'}
-  ]
-})
 
 Vue.config.productionTip = false
 
