@@ -57,7 +57,20 @@ export default {
           sortable: false
         }
       ],
-      sumTotal: 0
+      sumTotal: 0,
+      customFilter (item, queryText, itemText) {
+
+        const hasValue = val => val != null ? val : ''
+        const coinName = hasValue(item.name)
+        const coinSymbol = hasValue(item.symbol)
+        const query = hasValue(queryText)
+
+        return ((coinName.toString()
+          .toLowerCase()
+          .indexOf(query.toString().toLowerCase()) > -1) || (coinSymbol.toString()
+          .toLowerCase()
+          .indexOf(query.toString().toLowerCase()) > -1))
+      }
     }
   },
   created () {

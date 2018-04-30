@@ -11,7 +11,7 @@
           </v-btn>
         </td>
         <td>
-          <v-select :items="coins" v-model="props.item.coin" :label="$t('accountant.form.label_name')" item-text="name" autocomplete></v-select>
+          <v-select :items="coins" :filter="customFilter" v-model="props.item.coin" :label="$t('accountant.form.label_name')" item-text="name" autocomplete></v-select>
         </td>
         <td>
           <v-text-field type="number" v-model="props.item.coin.amount"></v-text-field>
