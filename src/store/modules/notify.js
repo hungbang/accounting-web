@@ -53,6 +53,10 @@ const mutations = {
         })
       }
 
+      if (errors.response.status === 500) {
+        _msg = 'Something went wrong'
+      }
+
       actions.notify(this, {
         mode: 'error',
         message: _msg
