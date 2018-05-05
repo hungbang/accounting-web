@@ -1,8 +1,8 @@
 import guards from '@/guard'
 
-import LayoutsAuth from '@/layouts/Auth'
-import AuthLogin from '@/pages/Auth/Login'
-import AuthRegister from '@/pages/Auth/Register'
+const LayoutsAuth = () => import('@/layouts/Auth')
+const AuthLogin = () => import('@/pages/Auth/Login')
+const AuthRegister = () => import('@/pages/Auth/Register')
 
 export const AuthRouter = {
   path: '/auth',

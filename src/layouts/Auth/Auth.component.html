@@ -13,7 +13,12 @@
           <v-slide-x-reverse-transition mode="out-in">
             <router-view></router-view>
           </v-slide-x-reverse-transition>
-
+          <v-btn color="light-blue darken-2 btn-home" dark absolute top left fab medium :to="{ name: 'client-accountant' }">
+            <v-tooltip bottom>
+              <v-icon class="d-inline-flex" slot="activator" large>store_mall_directory</v-icon>
+              <span>Home Page</span>
+            </v-tooltip>
+          </v-btn>
         </v-flex>
       </v-layout>
     </v-container>

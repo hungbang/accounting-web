@@ -1,7 +1,8 @@
 import AuthRouter from '@/pages/Auth/auth.router'
-import LayoutsClient from '@/layouts/Client'
-import Accountant from '@/pages/Accountant'
-import ScreenShare from '@/pages/ScreenShare'
+
+const LayoutsClient = () => import('@/layouts/Client')
+const Accountant = () => import('@/pages/Accountant')
+const ScreenShare = () => import('@/pages/ScreenShare')
 
 const AppRouter = [
   {
