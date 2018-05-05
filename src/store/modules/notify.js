@@ -62,11 +62,11 @@ const mutations = {
       // console.log(errors.response.status)
       // console.log(errors.response.headers)
     } else if (errors.request) {
-      console.log(errors.request)
+      // console.log(errors.request)
     } else {
       actions.notify(this, {
         mode: 'error',
-        message: errors.message
+        message: errors.error
       })
     }
     // router.push({name: 'auth-login'})

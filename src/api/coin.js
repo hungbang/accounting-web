@@ -9,5 +9,11 @@ export default {
   },
   getDetails (data) {
     return _api.get(`accountants/coins/supported/${data.name}/${data.amount}`)
+  },
+  getUserCoin () {
+    return _api.get(`protected/coins`)
+  },
+  saveCoin (data) {
+    return _api.post(`protected/coins`, data)
   }
 }

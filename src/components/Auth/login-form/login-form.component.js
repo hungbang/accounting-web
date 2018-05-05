@@ -1,4 +1,4 @@
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import ENV from '@/environment'
 
 export default {
@@ -27,6 +27,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'isLoading'
+    ]),
     passwordType () {
       return (this.password.show ? 'password' : 'text')
     },
@@ -45,8 +48,10 @@ export default {
     login () {
       if (this.$refs.form.validate()) {
         var _data = {
-          email: this.email.data,
-          password: this.password.data
+          username: this.email.data,
+          password: this.password.data,
+          grant_type: 'password',
+          enabled: true
         }
         this.signIn(_data)
       }

@@ -8,9 +8,47 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn icon @click="openSaveModal">
-      <v-icon color="primary">save</v-icon>
-    </v-btn>
+    <v-tooltip bottom v-if="!isAuth">
+      <v-btn icon slot="activator" :to="{name: 'auth-login'}">
+        <v-icon color="teal" medium>person_pin</v-icon>
+      </v-btn>
+      <span>Login</span>
+    </v-tooltip>
+
+    <v-tooltip bottom v-if="!isAuth">
+      <v-btn icon slot="activator" :to="{name: 'auth-register'}">
+        <v-icon color="teal" medium>person_add</v-icon>
+      </v-btn>
+      <span>Register</span>
+    </v-tooltip>
+
+    <v-tooltip bottom>
+      <v-btn icon slot="activator" @click="clearCoin">
+        <v-icon color="red" medium>delete_forever</v-icon>
+      </v-btn>
+      <span>Clear</span>
+    </v-tooltip>
+
+    <v-tooltip bottom>
+      <v-btn icon slot="activator" @click="openSaveModal">
+        <v-icon medium color="teal">backup</v-icon>
+      </v-btn>
+      <span>Save</span>
+    </v-tooltip>
+
+    <v-tooltip bottom>
+      <v-btn icon slot="activator" @click="copyToken">
+        <v-icon medium color="teal">screen_share</v-icon>
+      </v-btn>
+      <span>Share</span>
+    </v-tooltip>
+
+    <v-tooltip bottom v-if="isAuth">
+      <v-btn icon slot="activator" @click="signOut">
+        <v-icon color="red" medium>phonelink_off</v-icon>
+      </v-btn>
+      <span>Logout</span>
+    </v-tooltip>
   </v-toolbar>
 
   <v-content class="blue-grey lighten-4">
@@ -27,6 +65,8 @@
       <a href="mailto:hungbang@outlook.com?cc=dangchison@gmail.com">FeedBack</a>
     </nav>
     <v-spacer></v-spacer>
-    <div>&copy; {{ new Date().getFullYear() }}</div>
+    <div>&copy; {{ new Date().getFullYear() }} (<a @click="versionModal(true)">version 0.1</a>)</div>
   </v-footer>
+
+  <version-modal />
 </v-app>

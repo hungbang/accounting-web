@@ -3,24 +3,25 @@ import ENV from '@/environment'
 
 // Default interceptor public
 export const api = axios.create({
-  timeout: 1000,
+  timeout: 10000,
   headers: {
-    Accept: 'application/json, text/plain, */*',
-    'Content-Type': 'text/plain'
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
   }
 })
 
 // Default interceptor private
 export const _api = axios.create({
   baseURL: ENV.API.PATH,
-  timeout: 50000 // all requests will wait 2.5 seconds before timing out
+  timeout: 50000
 })
 
 // Add a request interceptor
 _api.interceptors.request.use(config => {
   if (localStorage.getItem(ENV.LOCALSTORAGE.TOKEN)) {
-    config.headers.Authorization = ENV.API.BEARER + localStorage.getItem(ENV.LOCALSTORAGE.TOKEN)
+    config.headers.Authorization = `${ENV.API.BEARER}${localStorage.getItem(ENV.LOCALSTORAGE.TOKEN)}`
   }
+
   return config
 }, error => {
   return Promise.reject(error)
@@ -43,10 +44,10 @@ _api.interceptors.response.use(response => {
       }
     })
       .then(data => {
-        localStorage.setItem(ENV.LOCALSTORAGE.TOKEN, data.token)
-        localStorage.setItem(ENV.LOCALSTORAGE.REFRESH_TOKEN, data.refreshToken)
-        axios.defaults.headers.common[ENV.API.AUTHORIZATION] = ENV.API.BEARER + localStorage.getItem(ENV.LOCALSTORAGE.TOKEN)
-        originalRequest.headers[ENV.API.AUTHORIZATION] = ENV.API.BEARER + localStorage.getItem(ENV.LOCALSTORAGE.TOKEN)
+        localStorage.setItem(ENV.LOCALSTORAGE.TOKEN, data.access_token)
+        localStorage.setItem(ENV.LOCALSTORAGE.REFRESH_TOKEN, data.refresh_token)
+        axios.defaults.headers.common[ENV.API.AUTHORIZATION] = `${ENV.API.BEARER}${localStorage.getItem(ENV.LOCALSTORAGE.TOKEN)}`
+        originalRequest.headers[ENV.API.AUTHORIZATION] = `${ENV.API.BEARER}${localStorage.getItem(ENV.LOCALSTORAGE.TOKEN)}`
         return axios(originalRequest)
       })
   }
