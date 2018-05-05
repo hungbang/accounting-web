@@ -41,7 +41,6 @@ const actions = {
     auth.getToken(helper.queryString(data))
       .then(response => {
         commit(AUTH_LOGIN, response)
-        router.push({name: 'client-accountant'})
       })
       .then(() => coinService.getUserCoin())
       .then(res => {
@@ -56,6 +55,7 @@ const actions = {
         rootState.CoinModules.statistics_tmp = _saveArr
         localStorage.setItem('accountant-coin', JSON.stringify(_saveArr))
         state.isLoading = false
+        router.push({name: 'client-accountant'})
       })
       .catch(errors => commit(API_FAILURE, errors))
   },
@@ -79,6 +79,7 @@ const mutations = {
   [AUTH_LOGOUT] (state) {
     localStorage.removeItem(ENV.LOCALSTORAGE.TOKEN)
     localStorage.removeItem(ENV.LOCALSTORAGE.REFRESH_TOKEN)
+    localStorage.removeItem('accountant-coin')
     state.refreshtoken = ''
     state.accessToken = ''
   }
