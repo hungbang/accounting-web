@@ -10,6 +10,13 @@ export const api = axios.create({
   }
 })
 
+// Add a response interceptor
+api.interceptors.response.use(response => {
+  return response.data
+}, error => {
+  return Promise.reject(error)
+})
+
 // Default interceptor private
 export const _api = axios.create({
   baseURL: ENV.API.PATH,
@@ -20,8 +27,25 @@ export const _api = axios.create({
   }
 })
 
+// Add a response interceptor
+_api.interceptors.response.use(response => {
+  return response.data
+}, error => {
+  return Promise.reject(error)
+})
+
+// Default interceptor private
+export const _apiAuth = axios.create({
+  baseURL: ENV.API.PATH,
+  timeout: 50000,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
+})
+
 // Add a request interceptor
-_api.interceptors.request.use(config => {
+_apiAuth.interceptors.request.use(config => {
   if (localStorage.getItem(ENV.LOCALSTORAGE.TOKEN)) {
     config.headers.Authorization = `${ENV.API.BEARER}${localStorage.getItem(ENV.LOCALSTORAGE.TOKEN)}`
   }
@@ -32,7 +56,7 @@ _api.interceptors.request.use(config => {
 })
 
 // Add a response interceptor
-_api.interceptors.response.use(response => {
+_apiAuth.interceptors.response.use(response => {
   return response.data
 }, error => {
   const originalRequest = error.config
@@ -42,7 +66,7 @@ _api.interceptors.response.use(response => {
 
     const refreshToken = localStorage.getItem(ENV.LOCALSTORAGE.REFRESH_TOKEN)
 
-    return _api.get('auth/refreshToken', {
+    return _apiAuth.get('auth/refreshToken', {
       params: {
         refreshToken: refreshToken
       }

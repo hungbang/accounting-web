@@ -1,4 +1,4 @@
-import { _api } from '@/common/api.service'
+import { _api, _apiAuth } from '@/common/api.service'
 
 export default {
   coins () {
@@ -11,9 +11,9 @@ export default {
     return _api.get(`accountants/coins/supported/${data.name}/${data.amount}`)
   },
   getUserCoin () {
-    return _api.get(`protected/coins`)
+    return _apiAuth.get(`protected/coins`)
   },
   saveCoin (data) {
-    return _api.post(`protected/coins`, data)
+    return _apiAuth.post(`protected/coins`, data)
   }
 }
