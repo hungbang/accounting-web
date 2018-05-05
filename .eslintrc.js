@@ -36,6 +36,7 @@ module.exports = {
           "VariableDeclarator": true
         }
       }
-    ]
+    ],
+    "no-unneeded-ternary": 0
   }
 }

@@ -3,12 +3,12 @@
     <v-card>
       <v-card-title class="title">Would you want save ?</v-card-title>
       <v-card-text class="text-xs-center">
-        <v-btn color="primary" @click="saveCoin">
-          Online
+        <v-btn color="primary" @click="saveCoin(false)">
+          Offline
         </v-btn>
 
-        <v-btn color="primary" disabled>
-          Offline
+        <v-btn color="primary" @click="saveCoin(true)">
+          Online
         </v-btn>
       </v-card-text>
       <v-card-actions>

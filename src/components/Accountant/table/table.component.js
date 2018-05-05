@@ -78,7 +78,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'coins', 'statistics'
+      'coins', 'statistics', 'coinLoading'
     ]),
     isRemove() {
       return this.statistics.length > 1
@@ -141,5 +141,12 @@ export default {
 
       this.sumTotal = _total
     }
+  },
+  updated () {
+    this.$nextTick(() => {
+      if (!this.statistics[0].coin.id) {
+        this.sumTotal = 0
+      }
+    })
   }
 }

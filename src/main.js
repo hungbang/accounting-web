@@ -13,6 +13,7 @@ import 'jquery-base64'
 import 'babel-polyfill'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons/iconfont/material-icons.css'
+import './main.css'
 
 const progressBarOpts = {
   color: '#87ffc8',
