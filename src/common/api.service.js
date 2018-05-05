@@ -13,7 +13,11 @@ export const api = axios.create({
 // Default interceptor private
 export const _api = axios.create({
   baseURL: ENV.API.PATH,
-  timeout: 50000
+  timeout: 50000,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
 })
 
 // Add a request interceptor
