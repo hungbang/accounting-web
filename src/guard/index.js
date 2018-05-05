@@ -3,7 +3,7 @@ import store from '@/store'
 export default {
   isLogin (to, from, next) {
     if (store.getters.isAuth) {
-      next({name: 'client-home'})
+      next({name: 'client-accountant'})
     } else {
       next()
     }

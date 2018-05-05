@@ -27,11 +27,7 @@ export default {
   },
   register: {
     title: 'Register Form',
-    success: 'Register Successful',
-    success_msg: `Please activate your account. We sent you a confirmation email to verify your account. If you don't see the email in your inbox then check the <strong>spam/junk</strong> folders. Sometimes it just takes a little bit more time. Tip: Add our email address
-    <a href="mailto:.noreply@drones4hire.com" class="s-signup-success__link">noreply@drones4hire.com</a> to your address book to make sure you receive our emails.`,
-    firstname: 'First Name',
-    lastname: 'Last Name',
+    success: 'You have been successfully registered',
     email: 'E-Mail',
     pass: 'Password',
     pass_confirm: 'Password Confirm',

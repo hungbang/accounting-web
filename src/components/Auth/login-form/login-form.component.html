@@ -16,6 +16,6 @@
       :append-icon-cb="passwordIconCB"
       :type="passwordType"></v-text-field>
 
-    <v-btn block color="primary" @click="login" :disabled="!valid">Login</v-btn>
+    <v-btn block color="primary" @click="login" :loading="isLoading" :disabled="!valid">Login</v-btn>
   </v-form>
 </section>

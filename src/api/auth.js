@@ -1,18 +1,18 @@
-import { _api, api } from '@/common/api.service'
+import { _api } from '@/common/api.service'
 
 export default {
-  verify (data) {
-    return _api.post('auth/credentials/verify', data)
-  },
   getToken (data) {
-    return _api.post('auth/token', data)
+    return _api.post('http://etz.trade/oauth/token', data, {
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        Authorization: 'Basic ' + btoa('accountant-client:android-secret')
+      }
+    })
   },
   signUp (data) {
-    return _api.post('auth/register', data)
+    return _api.post('http://etz.trade/api/public/users', data)
   },
-  enabled (data) {
-    return api.get('http://chuonghd.vantechdns.net/registration/confirm', {
-      params: data
-    })
+  enabledUser (userId) {
+    return _api.get(`http://etz.trade/api/public/users/enabled/${userId}`)
   }
 }

@@ -14,9 +14,9 @@ export default {
     SCOPE: process.env.LINE_SCOPE
   },
   LOCALSTORAGE: {
-    TOKEN: 'rekuru_token',
-    USER: 'rekuru_user',
-    REFRESH_TOKEN: 'rekuru_refreshToken'
+    TOKEN: 'codeshark_token',
+    USER: 'codeshark_user',
+    REFRESH_TOKEN: 'codeshark_refreshToken'
   },
   LANGUAGE: {
     ENGLISH: 'en',

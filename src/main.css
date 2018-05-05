@@ -1,0 +1,6 @@
+@media only screen and (min-width: 600px) {
+  .snack__wrapper {
+    max-width: 300px;
+    word-break: break-word;
+  }
+}

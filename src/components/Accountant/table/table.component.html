@@ -1,5 +1,6 @@
 <section class="accountant">
-  <v-data-table :headers="headers" :items="statistics" hide-actions class="elevation-1 mb-3" expand>
+  <v-data-table :headers="headers" :items="statistics" hide-actions class="elevation-1 mb-3" :loading="coinLoading" expand>
+    <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
     <template slot="items" slot-scope="props">
       <tr>
         <td>

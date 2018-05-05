@@ -8,18 +8,6 @@ export default {
   data () {
     return {
       valid: true,
-      firstname: {
-        data: null,
-        rules: [
-          v => !!v || this.$t('validate.required', {text: 'First Name'})
-        ]
-      },
-      lastname: {
-        data: null,
-        rules: [
-          v => !!v || this.$t('validate.required', {text: 'Last Name'})
-        ]
-      },
       email: {
         data: null,
         rules: [
@@ -71,8 +59,6 @@ export default {
     register () {
       if (this.$refs.form.validate()) {
         var data = {
-          firstName: this.firstname.data,
-          lastName: this.lastname.data,
           email: this.email.data,
           password: this.pass.data,
           confirmPassword: this.pass_confirm.data

@@ -1,0 +1,16 @@
+<section class="version">
+  <v-dialog v-model="isVersionModal" persistent max-width="400">
+    <v-card>
+      <v-card-title class="title">Release v0.1</v-card-title>
+      <v-card-text>
+        <p class="my-0">- Add more coins supported.</p>
+        <p class="my-0">- Add register feature, users can save the coin list that they want tracking</p>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="green darken-1" flat @click.stop="versionModal(false)">Close</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</section>
+

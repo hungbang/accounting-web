@@ -11,7 +11,7 @@ export const API_FAILURE  = 'API_FAILURE'
 
 export const RECEVER_COINS     = 'RECEVER_COINS'
 export const RECEVER_SAVE_COIN = 'RECEVER_SAVE_COIN'
-export const SAVE_COIN         = 'SAVE_COIN'
+export const CLEAR_COIN        = 'CLEAR_COIN'
 export const ADD_COIN          = 'ADD_COIN'
 export const REMOVE_COIN       = 'REMOVE_COIN'
 export const SELECTED_COIN     = 'SELECTED_COIN'
