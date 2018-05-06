@@ -1,5 +1,6 @@
 import axios from 'axios'
 import ENV from '@/environment'
+import helper from '@/common/helper.service'
 
 // Default interceptor public
 export const api = axios.create({
@@ -64,13 +65,16 @@ _apiAuth.interceptors.response.use(response => {
   if (error.response.status === 401 && !originalRequest._retry) {
     originalRequest._retry = true
 
-    const refreshToken = localStorage.getItem(ENV.LOCALSTORAGE.REFRESH_TOKEN)
+    const data = {
+      grant_type: 'refresh_token',
+      refresh_token: localStorage.getItem(ENV.LOCALSTORAGE.REFRESH_TOKEN)
+    }
+    const _headers = {
+      'content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      Authorization: 'Basic ' + btoa('accountant-client:android-secret')
+    }
 
-    return _apiAuth.get('auth/refreshToken', {
-      params: {
-        refreshToken: refreshToken
-      }
-    })
+    return api.post('https://etz.trade/oauth/token', helper.queryString(data), {headers: _headers})
       .then(data => {
         localStorage.setItem(ENV.LOCALSTORAGE.TOKEN, data.access_token)
         localStorage.setItem(ENV.LOCALSTORAGE.REFRESH_TOKEN, data.refresh_token)
