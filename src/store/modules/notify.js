@@ -62,19 +62,22 @@ const mutations = {
         message: _msg
       })
 
-      // console.log(errors.response.data)
-      // console.log(errors.response.status)
-      // console.log(errors.response.headers)
+      // console.log(errors.response.data, 'data')
+      // console.log(errors.response.status, 'status')
+      // console.log(errors.response.headers, 'headers')
     } else if (errors.request) {
-      // console.log(errors.request)
-    } else {
+      actions.notify(this, {
+        mode: 'error',
+        message: 'Something went wrong'
+      })
+    } else if (errors.error) {
       actions.notify(this, {
         mode: 'error',
         message: errors.error
       })
     }
     // router.push({name: 'auth-login'})
-    // console.log(error.config)
+    // console.log(errors.config)
   }
 }
 

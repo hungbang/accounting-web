@@ -49,8 +49,20 @@ const actions = {
   addCoin ({commit}) {
     commit(ADD_COIN)
   },
-  removeCoin ({ commit }, idx) {
-    commit(REMOVE_COIN, idx)
+  removeCoin ({ state, commit, dispatch }, idx) {
+    if (state.statistics[idx].coin.codeshark_id) {
+      coinService.removeCoin(state.statistics[idx].coin.codeshark_id)
+        .then(res => {
+          dispatch('notify', {
+            mode: 'success',
+            message: 'Data has been successfully deleted'
+          })
+          commit(REMOVE_COIN, idx)
+        })
+        .catch(errors => commit(API_FAILURE, errors))
+    } else {
+      commit(REMOVE_COIN, idx)
+    }
   },
   screenShare ({ commit }, coins) {
     commit(SCREEN_SHARE, coins)
@@ -154,6 +166,7 @@ const mutations = {
 
       state.statistics[key].coin.amount = item.amount
       state.statistics[key].coin.price_buy = item.priceBuy
+      state.statistics[key].coin.codeshark_id = item.id
     })
 
     state.isRenderCoinTmp = true

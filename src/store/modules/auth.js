@@ -25,7 +25,8 @@ const getters = {
 }
 
 const actions = {
-  signUp ({ commit, dispatch }, data) {
+  signUp ({ state, commit, dispatch }, data) {
+    state.isLoading = true
     auth.signUp(data)
       .then(res => auth.enabledUser(res.userId))
       .then(() => {
@@ -33,8 +34,12 @@ const actions = {
           mode: 'success',
           message: i18n.t('register.success')
         })
+        state.isLoading = false
         router.push({name: 'auth-login'})
-      }).catch(errors => commit(API_FAILURE, errors))
+      }).catch(errors => {
+        state.isLoading = false
+        commit(API_FAILURE, errors)
+      })
   },
   signIn ({ state, commit, rootState }, data) {
     state.isLoading = true
@@ -49,7 +54,8 @@ const actions = {
           _saveArr.push({
             coinName: coin.code_name,
             amount: coin.amount,
-            priceBuy: coin.price_buy
+            priceBuy: coin.price_buy,
+            id: coin.id
           })
         })
         rootState.CoinModules.statistics_tmp = _saveArr
@@ -57,11 +63,17 @@ const actions = {
         state.isLoading = false
         router.push({name: 'client-accountant'})
       })
-      .catch(errors => commit(API_FAILURE, errors))
+      .catch(errors => {
+        state.isLoading = false
+        commit(API_FAILURE, errors)
+        if (state.accessToken) {
+          router.push({name: 'client-accountant'})
+        }
+      })
   },
   signOut ({commit, rootState}) {
     rootState.CoinModules.coins.filter((coin, key) => {
-      if (rootState.CoinModules.statistics_tmp.find(_coin => _coin.coinName === coin.id)) {
+      if (rootState.CoinModules.statistics_tmp && rootState.CoinModules.statistics_tmp.length > 0 && rootState.CoinModules.statistics_tmp.find(_coin => _coin.coinName === coin.id)) {
         coin.amount = null
         coin.total_current = null
         coin.total_buy = null

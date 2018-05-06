@@ -1,6 +1,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import env from '@/environment'
 
+import { Sock, StompClient } from '@/common/socket'
 import VersionModal from '@/components/version'
 
 export default {
@@ -14,6 +15,13 @@ export default {
       drawer: null,
       mini: false,
       isVersionModal: false
+    }
+  },
+  created () {
+    Sock.onopen = () => {
+      StompClient.subscribe('/stock/price', (val) => {
+        this.wsCoins(JSON.parse(val.body))
+      })
     }
   },
   computed: {
@@ -32,7 +40,8 @@ export default {
       'screenShare',
       'notify',
       'versionModal',
-      'saveCoin'
+      'saveCoin',
+      'wsCoins'
     ]),
     copyToken () {
       if (this.statistics && this.statistics[0].coin.id) {
