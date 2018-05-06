@@ -2,6 +2,7 @@ export default {
   DOMAIN: process.env.DOMAIN,
   API: {
     PATH: process.env.API_URL + process.env.API_VERSION,
+    WS: process.env.API_WS,
     EMULATE_JSON: false,
     EMULATE_HTTP: true,
     AUTHORIZATION: 'Authorization',

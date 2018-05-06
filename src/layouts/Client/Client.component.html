@@ -29,7 +29,14 @@
       <span>Clear</span>
     </v-tooltip>
 
-    <v-tooltip bottom>
+    <v-tooltip bottom v-if="isAuth">
+      <v-btn icon slot="activator" @click="saveCoin(true)">
+        <v-icon medium color="teal">backup</v-icon>
+      </v-btn>
+      <span>Save</span>
+    </v-tooltip>
+
+    <v-tooltip bottom v-if="!isAuth">
       <v-btn icon slot="activator" @click="openSaveModal">
         <v-icon medium color="teal">backup</v-icon>
       </v-btn>

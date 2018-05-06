@@ -9,9 +9,6 @@ import router from '@/router'
 import coinService from '@/api/coin'
 import * as clone from 'lodash/clone'
 
-import stomp from 'stompjs'
-import SockJS from 'sockjs-client'
-
 const state = {
   coins: [],
   statistics: [
@@ -42,29 +39,12 @@ const getters = {
 
 const actions = {
   getCoins ({ state, commit, dispatch }) {
-    state.coinLoading = true
-    let sock = new SockJS('https://portfolio.codeshark.io/api/socket.io')
-    let stompClient = stomp.over(sock)
-
-    if (process.env.NODE_ENV === 'production') {
-      stompClient.debug = null
+    if (state.statistics_tmp && state.statistics_tmp.length) {
+      commit(RECEVER_SAVE_COIN)
     }
-
-    const stompConn = stompClient.connect({}, function (frame) {})
-
-    sock.onopen = () => {
-      stompClient.subscribe('/stock/price', function (val) {
-        commit(RECEVER_COINS, JSON.parse(val.body))
-        if (!state.isRenderCoinTmp && state.statistics_tmp && state.statistics_tmp.length) {
-          commit(RECEVER_SAVE_COIN)
-        }
-        state.coinLoading = false
-      })
-    }
-
-    sock.onclose = () => {
-      stompConn()
-    }
+  },
+  wsCoins ({ commit }, coins) {
+    commit(RECEVER_COINS, coins)
   },
   addCoin ({commit}) {
     commit(ADD_COIN)
