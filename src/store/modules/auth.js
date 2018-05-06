@@ -60,7 +60,16 @@ const actions = {
       .catch(errors => commit(API_FAILURE, errors))
   },
   signOut ({commit, rootState}) {
-    rootState.CoinModules.coins = []
+    rootState.CoinModules.coins.filter((coin, key) => {
+      if (rootState.CoinModules.statistics_tmp.find(_coin => _coin.coinName === coin.id)) {
+        coin.amount = null
+        coin.total_current = null
+        coin.total_buy = null
+        coin.textProfitLoss = null
+        coin.profitLoss = null
+        coin.price_buy = null
+      }
+    })
     rootState.CoinModules.statistics = [{
       coin: {}
     }]

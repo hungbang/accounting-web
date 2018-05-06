@@ -1,8 +1,10 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  DOMAIN: '"https://codeshark.io/"',
-  API_URL: '"https://codeshark.io/api/"',
+  DOMAIN: '"http://xxxxx"',
+  API_URL: '"http://xxxxx"',
+  API_WS: '"http://xxxxxxx"',
+  API_AUTH: '"http://xxxxxx"',
   API_VERSION: '""',
   G_ZIP: true,
   GTM_DEBUG: true

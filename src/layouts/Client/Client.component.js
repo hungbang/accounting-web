@@ -31,7 +31,8 @@ export default {
       'clearCoin',
       'screenShare',
       'notify',
-      'versionModal'
+      'versionModal',
+      'saveCoin'
     ]),
     copyToken () {
       if (this.statistics && this.statistics[0].coin.id) {

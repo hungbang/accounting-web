@@ -1,9 +1,15 @@
 <section class="accountant">
-  <v-card class="hidden-sm-and-down">
-    <accountant-table />
-  </v-card>
+  <v-fade-transition mode="out-in">
+    <v-card class="hidden-sm-and-down" v-if="coins.length">
+      <accountant-table />
+    </v-card>
 
-  <accountant-smartphone class="hidden-md-and-up"/>
+    <v-card class="text-xs-center py-5" v-if="!coins.length">
+      <v-progress-circular indeterminate :size="70" color="primary"></v-progress-circular>
+    </v-card>
+  </v-fade-transition>
+
+  <accountant-smartphone class="hidden-md-and-up" v-if="coins.length"/>
 
   <accountant-save-modal />
 </section>
