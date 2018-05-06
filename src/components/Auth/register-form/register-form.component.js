@@ -36,7 +36,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'isRegister'
+      'isRegister',
+      'isLoading'
     ]),
     passType () {
       return (this.pass.show ? 'password' : 'text')

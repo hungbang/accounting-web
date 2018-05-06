@@ -26,7 +26,7 @@
         :type="passConfirmType"
         required maxlength="50" minlength="8"></v-text-field>
 
-      <v-btn block color="primary" @click="register" :disabled="!valid" v-html="$t('register.submit')"></v-btn>
+      <v-btn block color="primary" @click="register" :loading="isLoading" :disabled="!valid" v-html="$t('register.submit')"></v-btn>
     </v-form>
   </v-fade-transition>
 </section>

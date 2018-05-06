@@ -15,5 +15,8 @@ export default {
   },
   saveCoin (data) {
     return _apiAuth.post(`protected/coins`, data)
+  },
+  removeCoin (coinId) {
+    return _apiAuth.delete(`protected/coins/${coinId}`)
   }
 }
