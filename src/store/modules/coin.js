@@ -9,6 +9,9 @@ import router from '@/router'
 import coinService from '@/api/coin'
 import * as clone from 'lodash/clone'
 
+import stomp from 'stompjs'
+import SockJS from 'sockjs-client'
+
 const state = {
   coins: [],
   statistics: [
@@ -22,7 +25,8 @@ const state = {
   statisticsView: [],
   totalView: 0,
   coinToken: '',
-  coinLoading: false
+  coinLoading: false,
+  isRenderCoinTmp: false
 }
 
 const getters = {
@@ -39,15 +43,28 @@ const getters = {
 const actions = {
   getCoins ({ state, commit, dispatch }) {
     state.coinLoading = true
-    coinService.coins()
-      .then(res => commit(RECEVER_COINS, res))
-      .then(() => {
-        if (state.statistics_tmp && state.statistics_tmp.length) {
+    let sock = new SockJS('https://portfolio.codeshark.io/api/socket.io')
+    let stompClient = stomp.over(sock)
+
+    if (process.env.NODE_ENV === 'production') {
+      stompClient.debug = null
+    }
+
+    const stompConn = stompClient.connect({}, function (frame) {})
+
+    sock.onopen = () => {
+      stompClient.subscribe('/stock/price', function (val) {
+        commit(RECEVER_COINS, JSON.parse(val.body))
+        if (!state.isRenderCoinTmp && state.statistics_tmp && state.statistics_tmp.length) {
           commit(RECEVER_SAVE_COIN)
         }
         state.coinLoading = false
       })
-      .catch(errors => commit(API_FAILURE, errors))
+    }
+
+    sock.onclose = () => {
+      stompConn()
+    }
   },
   addCoin ({commit}) {
     commit(ADD_COIN)
@@ -137,12 +154,18 @@ const actions = {
 
 const mutations = {
   [RECEVER_COINS] (state, coins) {
-    coins.forEach(item => {
-      item.amount = null
-      item.price_buy = null
-    })
+    if (state.coins.length > 2) {
+      state.coins.filter((coin, key) => {
+        state.coins[key].price_usd = coins.find(item => item.id === coin.id).price_usd
+      })
+    } else {
+      coins.forEach(item => {
+        item.amount = null
+        item.price_buy = null
+      })
 
-    state.coins = coins
+      state.coins = coins
+    }
   },
   [RECEVER_SAVE_COIN] (state) {
     state.statistics = []
@@ -152,6 +175,8 @@ const mutations = {
       state.statistics[key].coin.amount = item.amount
       state.statistics[key].coin.price_buy = item.priceBuy
     })
+
+    state.isRenderCoinTmp = true
   },
   [ADD_COIN] (state) {
     state.statistics.push({ coin: {} })
