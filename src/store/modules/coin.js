@@ -8,6 +8,7 @@ import {
 import router from '@/router'
 import coinService from '@/api/coin'
 import * as clone from 'lodash/clone'
+import * as uniqBy from 'lodash/uniqBy'
 
 const state = {
   coins: [],
@@ -59,7 +60,9 @@ const actions = {
           })
           commit(REMOVE_COIN, idx)
         })
-        .catch(errors => commit(API_FAILURE, errors))
+        .catch(errors => {
+          commit(API_FAILURE, errors)
+        })
     } else {
       commit(REMOVE_COIN, idx)
     }
@@ -80,7 +83,8 @@ const actions = {
           _saveArr.push({
             coinName: item.coin.id,
             amount: item.coin.amount,
-            priceBuy: item.coin.price_buy
+            priceBuy: item.coin.price_buy,
+            id: item.coin.codeshark_id
           })
         }
       })
@@ -92,7 +96,7 @@ const actions = {
           }
           coinService.saveCoin(_online)
             .then(res => {
-              localStorage.setItem('accountant-coin', JSON.stringify(_saveArr))
+              localStorage.setItem('accountant-coin', JSON.stringify(res))
               dispatch('notify', {
                 mode: 'success',
                 message: 'Data was saved successfully!'
@@ -141,6 +145,26 @@ const actions = {
     if (!status && !localStorage.getItem('accountant-version')) {
       localStorage.setItem('accountant-version', false)
     }
+  },
+  duplicateCoins ({ state, dispatch }, coinSelected) {
+    let _coinsTmp = []
+    let _coinSort = []
+
+    setTimeout(() => {
+      state.statistics.filter(item => {
+        _coinsTmp.push(item.coin)
+      })
+
+      _coinsTmp = uniqBy(_coinsTmp, 'id')
+
+      _coinsTmp.filter(item => {
+        if (item.id) {
+          _coinSort.push({coin: item})
+        }
+      })
+
+      state.statistics = _coinSort
+    }, 100)
   }
 }
 
