@@ -88,7 +88,8 @@ export default {
     ...mapActions([
       'getCoins',
       'addCoin',
-      'removeCoin'
+      'removeCoin',
+      'duplicateCoins'
     ]),
     islose (coin) {
       return coin.total_current < coin.total_buy
