@@ -96,7 +96,15 @@ const actions = {
           }
           coinService.saveCoin(_online)
             .then(res => {
-              localStorage.setItem('accountant-coin', JSON.stringify(res))
+              state.statistics.filter((item, key) => {
+                let _resTmp = res.find(coin => coin.code_name === item.coin.id)
+                if (_resTmp) {
+                  state.statistics[key].coin.codeshark_id = _resTmp.id
+                  _saveArr[key].id = _resTmp.id
+                }
+              })
+
+              localStorage.setItem('accountant-coin', JSON.stringify(_saveArr))
               dispatch('notify', {
                 mode: 'success',
                 message: 'Data was saved successfully!'
@@ -211,6 +219,24 @@ const mutations = {
     })
 
     state.statistics.splice(idx, 1)
+
+    if (localStorage.getItem('accountant-coin')) {
+      let _saveArr = []
+      let _saveTmp = clone(state.statistics)
+
+      _saveTmp.filter(item => {
+        if (item.coin.id) {
+          _saveArr.push({
+            coinName: item.coin.id,
+            amount: item.coin.amount,
+            priceBuy: item.coin.price_buy,
+            id: item.coin.codeshark_id
+          })
+        }
+      })
+
+      localStorage.setItem('accountant-coin', JSON.stringify(_saveArr))
+    }
   },
   [CLEAR_COIN] (state) {
     state.coins = []
