@@ -149,12 +149,13 @@ const actions = {
   closeSaveModal ({ state }) {
     state.isSaveModal = false
   },
-  versionModal ({ state }, status) {
+  versionModal ({ state, dispatch }, status) {
     state.isVersionModal = status
 
     if (!status && !localStorage.getItem(ENV.APP_VERSION)) {
       localStorage.setItem(ENV.APP_VERSION, false)
       localStorage.removeItem(ENV.APP_OLD_VERSION)
+      dispatch('signOut')
     }
   },
   duplicateCoins ({ state, dispatch }, coinSelected) {
