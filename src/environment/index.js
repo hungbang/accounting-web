@@ -1,7 +1,7 @@
 export default {
   DOMAIN: process.env.DOMAIN,
-  APP_VERSION: 'codeshark-v0.1',
-  APP_OLD_VERSION: 'accountant-version',
+  APP_VERSION: 'codeshark-v0.1.1',
+  APP_OLD_VERSION: 'codeshark-v0.1',
   API: {
     PATH: process.env.API_URL + process.env.API_VERSION,
     WS: process.env.API_WS,
