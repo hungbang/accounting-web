@@ -5,6 +5,8 @@ import {
   API_FAILURE
 } from '@/store/mutations'
 
+import ENV from '@/environment'
+
 import router from '@/router'
 import coinService from '@/api/coin'
 import * as clone from 'lodash/clone'
@@ -18,7 +20,7 @@ const state = {
     }
   ],
   isSaveModal: false,
-  isVersionModal: (localStorage.getItem('accountant-version') ? false : true),
+  isVersionModal: (localStorage.getItem(ENV.APP_VERSION) ? false : true),
   statistics_tmp: JSON.parse(localStorage.getItem('accountant-coin')),
   statisticsView: [],
   totalView: 0,
@@ -150,8 +152,9 @@ const actions = {
   versionModal ({ state }, status) {
     state.isVersionModal = status
 
-    if (!status && !localStorage.getItem('accountant-version')) {
-      localStorage.setItem('accountant-version', false)
+    if (!status && !localStorage.getItem(ENV.APP_VERSION)) {
+      localStorage.setItem(ENV.APP_VERSION, false)
+      localStorage.removeItem(ENV.APP_OLD_VERSION)
     }
   },
   duplicateCoins ({ state, dispatch }, coinSelected) {
@@ -166,9 +169,7 @@ const actions = {
       _coinsTmp = uniqBy(_coinsTmp, 'id')
 
       _coinsTmp.filter(item => {
-        if (item.id) {
-          _coinSort.push({coin: item})
-        }
+        _coinSort.push({coin: item})
       })
 
       state.statistics = _coinSort
