@@ -50,8 +50,7 @@ export default {
         var _data = {
           username: this.email.data,
           password: this.password.data,
-          grant_type: 'password',
-          enabled: true
+          grant_type: 'password'
         }
         this.signIn(_data)
       }

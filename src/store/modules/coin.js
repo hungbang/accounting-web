@@ -217,6 +217,7 @@ const mutations = {
         item.textProfitLoss = null
         item.profitLoss = null
         item.price_buy = null
+        item.codeshark_id = null
       }
     })
 
